@@ -1,1 +1,63 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order360-reporting-service
+  namespace: jl8v-prode-nscxp
+  labels:
+    project.app: order360-reporting-service
+    project.name: order360-reporting-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project.app: order360-reporting-service
+      project.name: order360-reporting-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        project.app: order360-reporting-service
+        project.name: order360-reporting-service
+    spec:
+      containers:
+      - name: order360-reporting-service
+        image: ev6v-docker-prod.oneartifactoryprod.horizon.com/vzw/ev6v/prod/order360-reporting-service:23.13.300081020230780
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: "4"
+            memory: 4Gi
+          requests:
+            cpu: "1"
+            memory: 4Gi
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:
+        - name: tmpfs
+          mountPath: /tmp
+      tolerations:
+      - key: vsad
+        operator: Equal
+        value: EV6V
+        effect: NoSchedule
+      - key: role
+        operator: Equal
+        value: worker
+        effect: NoSchedule
+      volumes:
+      - name: tmpfs
+        emptyDir: {}
+      terminationGracePeriodSeconds: 50
