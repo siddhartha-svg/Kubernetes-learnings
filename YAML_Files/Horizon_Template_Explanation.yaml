@@ -1,0 +1,63 @@
+apiVersion: apps/v1  # Defines the Kubernetes API version being used.
+kind: Deployment     # The type of Kubernetes object.
+metadata:           # Metadata about the object.
+  name: order360-reporting-service  # A unique name for the Deployment.
+  namespace: jl8v-prode-nscxp      # The namespace where this Deployment resides.
+  labels:           # Labels are key-value pairs for organizing objects.
+    project.app: order360-reporting-service
+    project.name: order360-reporting-service
+spec:               # The desired state specification for the Deployment.
+  replicas: 1              # The desired number of identical pods.
+  selector:              # Defines how the Deployment finds pods to manage.
+    matchLabels:         # The labels pods must have to be managed by this Deployment.
+      project.app: order360-reporting-service
+      project.name: order360-reporting-service
+  strategy:              # The strategy for replacing old pods with new ones during an update.
+    rollingUpdate:         # A RollingUpdate strategy updates pods one at a time.
+      maxSurge: 25%         # The maximum number of pods that can be created above the desired replicas.
+      maxUnavailable: 25%    # The maximum number of pods that can be unavailable during the update.
+    type: RollingUpdate    # Specifies the type of update strategy.
+  template:              # The pod template; a blueprint for creating new pods.
+    metadata:
+      labels:            # Labels applied to the pods created by this template.
+        project.app: order360-reporting-service
+        project.name: order360-reporting-service
+    spec:
+      containers:        # A list of containers that will run in the pod.
+      - name: order360-reporting-service  # Name of the container.
+        image: ev6v-docker-prod.oneartifactoryprod.verizon.com/vzw/ev6v/prod/order360-reporting-service:23.13.300081020230780  # The Docker image to use.
+        imagePullPolicy: IfNotPresent  # Pull the image only if it's not already on the node.
+        resources:         # Resource limits and requests for the container.
+          limits:          # The maximum amount of resources the container can use.
+            cpu: "4"
+            memory: 4Gi
+          requests:        # The minimum amount of resources the container is guaranteed.
+            cpu: "1"
+            memory: 4Gi
+        securityContext:   # Security settings for the container.
+          runAsNonRoot: true  # Ensures the container runs as a non-root user.
+          runAsUser: 1001      # Specifies the user ID for the container process.
+          allowPrivilegeEscalation: false # Prevents the process from gaining more privileges than its parent.
+          capabilities:      # Dropping all default capabilities for security.
+            drop:
+            - ALL
+        ports:           # The ports the container exposes.
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:      # Defines where volumes are mounted inside the container.
+        - name: tmpfs
+          mountPath: /tmp
+      tolerations:       # Allows the pod to be scheduled on nodes that have matching taints.
+      - key: vsad
+        operator: Equal
+        value: EV6V
+        effect: NoSchedule
+      - key: role
+        operator: Equal
+        value: worker
+        effect: NoSchedule
+      volumes:           # Defines the volumes available to the pod's containers.
+      - name: tmpfs
+        emptyDir: {}       # Creates a temporary, empty directory for the pod's lifecycle.
+      terminationGracePeriodSeconds: 50 # Time given for the pod to shut down gracefully.
