@@ -30,6 +30,7 @@ Works together with Deployments, ReplicaSets, StatefulSets.
 
 Step 1 – Create a Deployment with 3 replicas
 
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,12 +51,13 @@ spec:
 
 kubectl apply -f deployment.yaml
 kubectl get pods -l app=myapp
-
+```
 
 ---
 
 Step 2 – Apply a Pod Disruption Budget
 
+```
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -74,6 +76,7 @@ Expected output:
 NAME MIN AVAILABLE MAX UNAVAILABLE ALLOWED DISRUPTIONS AGE
 myapp-pdb 2 N/A 1 10s
 
+```
 
 ---
 
