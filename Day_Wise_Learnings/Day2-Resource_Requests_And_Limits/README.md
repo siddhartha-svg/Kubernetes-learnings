@@ -1,4 +1,4 @@
----
+
 
 # Day 2 – Resource Requests & Limits
 
@@ -16,7 +16,7 @@ If it exceeds CPU limit, it gets throttled (not killed).
 
 
 
----
+
 
 ## 📖 Key Concepts
 
