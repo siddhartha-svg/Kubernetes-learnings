@@ -120,6 +120,3 @@ Essential for Zero Trust Security in Kubernetes.
 
 ---
 
-👉 Now you have Day 1 (PDB), Day 2 (Resources), and Day 3 (Network Policies) fully documented 🎯
-
-Do you want me to also prepare Day 4 – Init Containers in the same style so your repo flows smoothly?
