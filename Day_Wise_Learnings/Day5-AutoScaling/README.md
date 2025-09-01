@@ -1,4 +1,4 @@
----
+
 
 # Day 5 – Autoscaling (HPA & VPA)
 
@@ -19,7 +19,6 @@ VPA is less common in production but very powerful for optimizing resource usage
 
 
 
----
 
 ## 📖 Key Concepts
 
