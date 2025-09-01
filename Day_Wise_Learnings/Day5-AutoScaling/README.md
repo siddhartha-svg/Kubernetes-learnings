@@ -112,13 +112,15 @@ myapp-hpa Deployment/myapp 10%/50% 1 5 1 10s
 
 ```
 kubectl run -i --tty load-generator --image=busybox --restart=Never -- /bin/sh
+```
 
-Inside pod, run:
-
+#### Inside pod, run:
+```
 while true; do wget -q -O- http://myapp.default.svc.cluster.local; done
+```
 
 Keep this running to generate CPU load.
-```
+
 
 ### In another terminal:
 
