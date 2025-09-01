@@ -88,7 +88,7 @@ kubectl get networkpolicy
 ---
 
 ## Step 3 – Test Access
-
+```
 1. Exec into frontend pod → should reach backend.
 kubectl exec -it frontend -- curl backend:80
 
@@ -97,7 +97,7 @@ kubectl run testpod --image=busybox --rm -it -- sh
 
 ## Inside pod
 wget --spider --timeout=1 backend:80
-
+```
 
 ---
 
