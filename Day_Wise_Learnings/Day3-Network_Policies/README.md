@@ -1,11 +1,8 @@
-Awesome 🚀 Let’s continue with Day 3 – Network Policies in the same clean format for your repo.
-
-
 ---
 
-Day 3 – Network Policies
+# Day 3 – Network Policies
 
-📌 What I Learned
+## 📌 What I Learned
 
 By default, all pods in Kubernetes can talk to each other → not secure.
 
@@ -19,7 +16,7 @@ Similar to firewall rules at the pod level.
 
 ---
 
-📖 Key Concepts
+## 📖 Key Concepts
 
 Ingress rules → Control incoming traffic to a pod.
 
@@ -33,10 +30,11 @@ If a pod is selected by a policy with no allow rules, all traffic is denied by d
 
 ---
 
-🛠️ Practical Demo
+## 🛠️ Practical Demo
 
 Step 1 – Create 2 Pods: frontend & backend
 
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -58,15 +56,17 @@ spec:
  containers:
  - name: backend
  image: nginx
-
+```
+```
 kubectl apply -f pods.yaml
 kubectl get pods -l app
-
+```
 
 ---
 
-Step 2 – Create a Network Policy (allow only frontend → backend)
+## Step 2 – Create a Network Policy (allow only frontend → backend)
 
+```
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -83,30 +83,26 @@ spec:
 
 kubectl apply -f network-policy.yaml
 kubectl get networkpolicy
-
+```
 
 ---
 
-Step 3 – Test Access
+## Step 3 – Test Access
 
 1. Exec into frontend pod → should reach backend.
-
-
-
 kubectl exec -it frontend -- curl backend:80
 
 2. Exec into another pod (not frontend) → should be blocked.
 
 
-
 kubectl run testpod --image=busybox --rm -it -- sh
-# Inside pod
+## Inside pod
 wget --spider --timeout=1 backend:80
 
 
 ---
 
-✅ Key Takeaways
+## ✅ Key Takeaways
 
 NetworkPolicy = Pod-level firewall inside the cluster.
 
