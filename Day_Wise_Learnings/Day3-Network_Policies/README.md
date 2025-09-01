@@ -93,9 +93,8 @@ kubectl get networkpolicy
 kubectl exec -it frontend -- curl backend:80
 
 2. Exec into another pod (not frontend) → should be blocked.
-
-
 kubectl run testpod --image=busybox --rm -it -- sh
+
 ## Inside pod
 wget --spider --timeout=1 backend:80
 
